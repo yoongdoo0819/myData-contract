@@ -3,11 +3,11 @@ pragma solidity ^0.8.10;
 
 interface IMyData {
     
-    function storeMyDataMerkleRoot(address owner, bytes32 allMyDataHash, bool flag, uint256 price) external;
+    function storeMyDataHash(address owner, string memory part, string memory name, bytes32 dataHash, bool flag, uint256 price) external;
 
-    function storeMyDataSell(address owner, bool flag) external;
+    function storeMyDataSell(address owner, string memory part, string memory name, bool flag) external;
 
-    function storeMyDataPrice(address owner, uint256 price) external;
+    function storeMyDataPrice(address owner, string memory part, string memory name, uint256 price) external;
 
-    function buyMydata(address owner, address buyer) external payable;
+    function buyMydata(address owner, string memory part, string memory name, address buyer) external payable;
 } 

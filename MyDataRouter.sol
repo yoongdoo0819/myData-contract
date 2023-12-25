@@ -18,22 +18,22 @@ contract MyDataRouter {
     }
 
     // 사용자 myData 머클루트 값 저장
-    function setMyDataMerkleRoot(string calldata myDataContractName, address owner, bytes32 myDataMerkleRoot, bool flag, uint256 price) public {
-        IMyData(myDataList[myDataContractName]).storeMyDataMerkleRoot(owner, myDataMerkleRoot, flag, price);
+    function setMyDataHash(string calldata myDataContractName, address owner, string memory part, string memory name, bytes32 dataHash, bool flag, uint256 price) public {
+        IMyData(myDataList[myDataContractName]).storeMyDataHash(owner, part, name, dataHash, flag, price);
     }
 
     // 사용자 myData 판매 여부 설정
-    function setMyDataSell(string calldata myDataContractName, address owner, bool flag) public {
-        IMyData(myDataList[myDataContractName]).storeMyDataSell(owner, flag);
+    function setMyDataSell(string calldata myDataContractName, address owner, string memory part, string memory name, bool flag) public {
+        IMyData(myDataList[myDataContractName]).storeMyDataSell(owner, part, name, flag);
     }
 
     // 사용자 myData 가격 설정
-    function setMyDataPrice(string calldata myDataContractName, address owner, uint256 price) public {
-        IMyData(myDataList[myDataContractName]).storeMyDataPrice(owner, price);
+    function setMyDataPrice(string calldata myDataContractName, address owner, string memory part, string memory name, uint256 price) public {
+        IMyData(myDataList[myDataContractName]).storeMyDataPrice(owner, part, name, price);
     }
 
     // 사용자 myData 구매
-    function buyMyData(string calldata myDataContractName, address owner) public payable {
-        IMyData(myDataList[myDataContractName]).buyMydata{value: msg.value}(owner, msg.sender);
+    function buyMyData(string calldata myDataContractName, address owner, string memory part, string memory name) public payable {
+        IMyData(myDataList[myDataContractName]).buyMydata{value: msg.value}(owner, part, name, msg.sender);
     }
 }
