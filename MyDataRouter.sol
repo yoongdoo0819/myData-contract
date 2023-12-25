@@ -12,12 +12,11 @@ contract MyDataRouter {
         myDataList[myDataContractName] = myDataContractAddr;
     }
 
-    
     function getMyDataContractAddr(string calldata myDataContractName) public view returns(address myDataContractAddr) {
         return myDataList[myDataContractName];
     }
 
-    // 사용자 myData 머클루트 값 저장
+    // 사용자 myData hash 값 저장
     function setMyDataHash(string calldata myDataContractName, address owner, string memory part, string memory name, bytes32 dataHash, bool flag, uint256 price) public {
         IMyData(myDataList[myDataContractName]).storeMyDataHash(owner, part, name, dataHash, flag, price);
     }

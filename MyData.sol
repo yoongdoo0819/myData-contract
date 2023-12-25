@@ -12,8 +12,6 @@ contract HealthCareContract is IMyData {
     }
     
     mapping (address => mapping(string => mapping(string => OwnerHealthCareMyData))) public healthCareMyData;
-
-    // mapping (address => OwnerHealthCareMyData) public healthCareMyDataList;
     mapping (address => uint256) public bal;
     mapping (address => mapping(string => mapping(string => address[]))) public buyers;
 
