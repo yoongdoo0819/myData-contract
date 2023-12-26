@@ -37,9 +37,14 @@ contract HealthCareContract is IMyData {
 
     function buyMydata(address owner, string memory part, string memory name, address buyer) public payable  {
         OwnerHealthCareMyData memory ownerHealthCareMyData = healthCareMyData[owner][part][name];
+        require(ownerHealthCareMyData.flag == true, "HealthCareContract: flag is false");
         require(msg.value == ownerHealthCareMyData.price, "HealthCareContract: incorrect value");
         bal[owner] += msg.value;
         buyers[owner][part][name].push(buyer);
+    }
+
+    function getBuyers(address owner, string memory part, string memory name) public view returns (address[] memory addr) {
+        return buyers[owner][part][name];
     }
 
     function getBalance(address owner) public view returns(uint256) {
