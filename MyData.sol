@@ -5,6 +5,8 @@ import "./IMyData.sol";
 
 contract HealthCareContract is IMyData {
     
+    address router;
+
     struct OwnerHealthCareMyData {
         bytes32 dataHash;
         bool flag;
@@ -15,7 +17,16 @@ contract HealthCareContract is IMyData {
     mapping (address => uint256) public bal;
     mapping (address => mapping(string => mapping(string => address[]))) public buyers;
 
-    function storeMyDataHash(address owner, string memory part, string memory name, bytes32 dataHash, bool flag, uint256 price) public {
+    constructor(address _router) {
+        router = _router;
+    }
+
+    modifier onlyRouter() {
+        require(router == msg.sender, "HealthCareContract: msg.sender is not router");
+        _;
+    }
+
+    function storeMyDataHash(address owner, string memory part, string memory name, bytes32 dataHash, bool flag, uint256 price) public onlyRouter {
         healthCareMyData[owner][part][name] = OwnerHealthCareMyData(dataHash, flag, price);
     }
 
@@ -23,19 +34,19 @@ contract HealthCareContract is IMyData {
         return healthCareMyData[owner][part][name];
     }
 
-    function storeMyDataSell(address owner, string memory part, string memory name, bool flag) public {
+    function storeMyDataSell(address owner, string memory part, string memory name, bool flag) public onlyRouter {
         OwnerHealthCareMyData memory ownerHealthCareMyData = healthCareMyData[owner][part][name];
         ownerHealthCareMyData.flag = flag;
         healthCareMyData[owner][part][name] = ownerHealthCareMyData;
     }
 
-    function storeMyDataPrice(address owner, string memory part, string memory name, uint256 price) public {
+    function storeMyDataPrice(address owner, string memory part, string memory name, uint256 price) public onlyRouter {
         OwnerHealthCareMyData memory ownerHealthCareMyData = healthCareMyData[owner][part][name];
         ownerHealthCareMyData.price = price;
         healthCareMyData[owner][part][name] = ownerHealthCareMyData;
     }
 
-    function buyMydata(address owner, string memory part, string memory name, address buyer) public payable  {
+    function buyMydata(address owner, string memory part, string memory name, address buyer) public onlyRouter payable  {
         OwnerHealthCareMyData memory ownerHealthCareMyData = healthCareMyData[owner][part][name];
         require(ownerHealthCareMyData.flag == true, "HealthCareContract: flag is false");
         require(msg.value == ownerHealthCareMyData.price, "HealthCareContract: incorrect value");
