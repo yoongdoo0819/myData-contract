@@ -63,4 +63,14 @@ contract MyDataRouter {
     function buyMyData(string calldata myDataContractName, address owner, string memory part, string memory name) public payable {
         IMyData(myDataList[myDataContractName]).buyMydata{value: msg.value}(owner, part, name, msg.sender);
     }
+
+    // 도메인 컨트랙트 콜을 위한 test 함수
+    function setTestValue(string calldata myDataContractName, bool _test) public {
+        IMyData(myDataList[myDataContractName]).setTest(_test);
+    }
+
+    // 도메인 컨트랙트 콜을 위한 test 함수
+    function getTestValue(string calldata myDataContractName) public returns (bool) {
+        return IMyData(myDataList[myDataContractName]).getTest();
+    }
 }

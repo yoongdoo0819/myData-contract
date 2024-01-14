@@ -6,6 +6,7 @@ import "./IMyData.sol";
 contract HealthCareContract is IMyData {
     
     address router;
+    bool test;
 
     struct OwnerHealthCareMyData {
         bytes32 dataHash;
@@ -62,4 +63,11 @@ contract HealthCareContract is IMyData {
         return bal[owner];
     }
 
+    function setTest(bool _test) public onlyRouter {
+        test = _test;
+    }
+
+    function getTest() public view returns (bool) {
+		return test;
+	}
 }
